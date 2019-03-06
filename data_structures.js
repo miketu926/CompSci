@@ -38,12 +38,15 @@
 // Searching & Sorting
 
   // QSort, MergeSort, and BSearch (know these well)
-  // 
-
 
 // Dynamic Programming & Memoization
 
 // Select Methodologies
+
+  // left and right pointers
+  // sliding window
+  // backtracking
+  // maths
 
   
 // Not covered: Arrays and Strings, Graphs (Breadths First Search most of the time), Tries (a tree with any number of nodes)
