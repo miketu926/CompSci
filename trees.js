@@ -87,7 +87,49 @@ class BST {
     let rightH = this.height(root.right);
     return Math.max(leftH, rightH) + 1;
   }
+
+
+  search(target, root=this.root) {
+    // if (root === null) return false;
+    if (root === null) return null;  // to return node
+
+    if (target < root.val) {
+      return this.search(target, root.left);
+    } else if (target > root.val) {
+      return this.search(target, root.right);
+    } else {
+      // return true;
+      return root;  // to return node
+    }
+  }
+
+  // runtime:
+  //   O(n)
+  //
+  dfPrint() {  // depth first print
+    let stack = [this.root];
+
+    while (stack.length > 0) {
+      let node = stack.pop();
+      console.log(node.val);
+      if (node.right !== null) stack.push(node.right);
+      if (node.left !== null) stack.push(node.left);
+    }
+  }
+
+  bfPrint() {  // breadth first print
+    let queue = [this.root];
+
+    while (queue.length > 0) {
+      let node = queue.shift();
+      console.log(node.val);
+      if (node.right !== null) queue.push(node.right);
+      if (node.left !== null) queue.push(node.left);
+    }
+  }
+
 }
+
 
 // Binary Search Tree (BST) - must be recursive (*)
 // - given the root of a tree
@@ -111,9 +153,22 @@ console.log(tree.root);
 
 tree.inOrderPrint();
 
-// run node Trees.js to test
-
-
+// run node trees.js to test
 
 // PART 2
 
+console.log(tree.search(11));
+console.log(tree.search(3));
+console.log(tree.search(9));
+
+// WORST CASE B-SEARCH ON BST - n is the number of nodes
+//   runtime: O(n)
+//   when "tree" is really a linked list and the val is not found
+// BEST CASE
+//   runtime: O(log(n))
+//   when "tree" is balanced
+
+console.log(tree.dfPrint());
+console.log(tree.bfPrint());
+
+module.exports = { BST };
