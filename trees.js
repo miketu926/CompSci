@@ -35,7 +35,7 @@ class BST {
     this.root = null;
   }
 
-  insert(val, root=this.root) {
+  insert(val, root = this.root) {
     // if tree is empty, then set the abs root to the val
     if (this.root === null) {
       this.root = new Node(val);
@@ -61,9 +61,9 @@ class BST {
       }
     }
   }
-  
 
-  inOrderPrint(root=this.root) {
+
+  inOrderPrint(root = this.root) {
     // don't print anyhting in case it's an empty tree (base case!)
     if (root === null) return;
 
@@ -81,7 +81,7 @@ class BST {
   //      (this check is recursive)
   // - empty tree has a height of -1
 
-  height(root=this.root) {
+  height(root = this.root) {
     if (root === null) return -1;
     let leftH = this.height(root.left);
     let rightH = this.height(root.right);
@@ -89,9 +89,9 @@ class BST {
   }
 
 
-  search(target, root=this.root) {
+  search(target, root = this.root) {
     // if (root === null) return false;
-    if (root === null) return null;  // to return node
+    if (root === null) return null; // to return node
 
     if (target < root.val) {
       return this.search(target, root.left);
@@ -99,14 +99,14 @@ class BST {
       return this.search(target, root.right);
     } else {
       // return true;
-      return root;  // to return node
+      return root; // to return node
     }
   }
 
   // runtime:
   //   O(n)
   //
-  dfPrint() {  // depth first print
+  dfPrint() { // depth first print
     let stack = [this.root];
 
     while (stack.length > 0) {
@@ -117,7 +117,7 @@ class BST {
     }
   }
 
-  bfPrint() {  // breadth first print
+  bfPrint() { // breadth first print
     let queue = [this.root];
 
     while (queue.length > 0) {
@@ -171,4 +171,6 @@ console.log(tree.search(9));
 console.log(tree.dfPrint());
 console.log(tree.bfPrint());
 
-module.exports = { BST };
+module.exports = {
+  BST
+};
