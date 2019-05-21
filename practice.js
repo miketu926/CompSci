@@ -114,22 +114,60 @@ const quickSort = arr => {
 // console.log(quickSort([3, 5, 2, 1, 0, 9]));
 
 const binarySearch = (arr, target) => {
-  if (arr.length <= 0) {
-    return false;
-  }
 
-  let midIdx = Math.floor(arr.length / 2);
-  let left = arr.slice(0, midIdx);
-  let right = arr.slice(midIdx + 1);
+  let L = 0;
+  let R = arr.length - 1;
 
-  if (target < arr[midIdx]) {
-    return binarySearch(left, target);
-  } else if (target > arr[midIdx]) {
-    return binarySearch(right, target);
-  } else {
-    return true;
+  while (L <= R) {
+    let mid = Math.floor((R + L) / 2);
+
+    if (arr[mid] === target) {
+      return mid;
+    } else if (target > arr[mid]) {
+      L = mid + 1;
+    } else {
+      R = mid - 1;
+    }
   }
+  return false;
 };
 
-console.log(binarySearch([-1, 0, 5, 7, 10, 19], 19)); // true
-console.log(binarySearch([-1, 0, 5, 7, 10, 19], 1)); // false
+// console.log(binarySearch([-1, 0, 5, 7, 10, 19], 19)); // 5
+// console.log(binarySearch([-1, 0, 5, 7, 10, 19], -1)); // 0
+// console.log(binarySearch([-1, 0, 5, 7, 10, 19], 5)); // 2
+// console.log(binarySearch([-1, 0, 5, 7, 10, 19], 0)); // 1
+// console.log(binarySearch([-1, 0, 5, 7, 10, 19], 2)); // false
+
+const powerOfTen = (num) => {
+
+  while (num >= 10) {
+    num = num / 10;
+  }
+
+  if (num === 1) return true;
+  return false;
+
+};
+
+// console.log(powerOfTen(1000)); // true
+// console.log(powerOfTen(500)); // false
+
+const secondMin = (arr) => {
+
+  let firstMin = Infinity;
+  let secondMin = Infinity;
+
+  arr.forEach(el => {
+    firstMin = Math.min(firstMin, el);
+  });
+
+  arr.forEach(el => {
+    if (el > firstMin) {
+      secondMin = Math.min(secondMin, el);
+    }
+  });
+
+  return secondMin;
+};
+
+// console.log(secondMin([4, 8, 1, 10, 2])); // 2
