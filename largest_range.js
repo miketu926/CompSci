@@ -8,7 +8,10 @@
 // input: [1,11,3,0,15,5,2,4,10,7,12,6]
 // output: [0,7]
 
-const largestRange = (arr) => {
+// FIRST METHOD is the sort method.
+// SECOND METHOD is the hashmap method, where each ele's val is T or F
+
+const largestRange1 = (arr) => {
   arr.sort((a, b) => a - b)
 
   // then have one pointer at first idx, then another to see if +1 gives the next
@@ -40,4 +43,45 @@ const largestRange = (arr) => {
   return result;
 };
 
-console.log(largestRange([0, 1, 2, 3, 4, 5, 6, 7, 10, 11, 12, 15]));
+const largestRange2 = (arr) => {
+  const obj = {};
+  let result = [];
+  let longest = 0;
+
+  for (const el of arr) {
+    obj[el] = true;
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (!obj[arr[i]]) continue;
+
+    obj[arr[i]] = false;
+
+    let currLength = 1;
+    let L = arr[i] - 1;
+    let R = arr[i] + 1;
+
+    while (obj[L]) {
+      obj[L] = false;
+      currLength++;
+      L--;
+    }
+
+    while (obj[R]) {
+      obj[R] = false;
+      currLength++;
+      R++;
+    }
+
+    if (currLength > longest) {
+      longest = currLength;
+      result = [L + 1, R - 1];
+    }
+  }
+
+  return result;
+
+};
+
+// console.log(largestRange1([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]));
+console.log(largestRange2([1, 11, 3, 0, 15, 5, 2, 4, 10, 7, 12, 6]));
