@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sign up form</title>
+  <style>
+    .form-group {
+      position: relative;
+      margin: 20px 0 0 0;
+    }
+
+    .form-control {
+      padding-right: 30px;
+    }
+
+    .input-glyph {
+      position: absolute;
+      color: green;
+      right: 10px;
+      pointer-events: none;
+      top: 10px;
+      display: none;
+    }
+
+    form:not(.form-inline) label~.input-glyph {
+      top: 34px;
+    }
+
+    .form-control.valid~.input-glyph,
+    .form-control.valid:invalid~.input-glyph {
+      display: block;
+    }
+
+    .form-control.valid~.input-glyph {
+      display: block;
+    }
+
+    .form-control.valid:invalid~.input-glyph {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <form name="user-registration-form" onsubmit="return validateForm(this);">
+      <div class="row">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" name="firstName" id="firstName" class="form-control" autocomplete="false" required
+            title="First name is required." oninput="return validateRequired(this);"
+            onchange="return validateRequired(this);">
+          <i class="input-glyph glyphicon glyphicon-ok-circle"></i>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" name="lastName" id="lastName" class="form-control" autocomplete="false" required
+            title="Last name is required." oninput="return validateRequired(this);"
+            onchange="return validateRequired(this);">
+          <i class="input-glyph glyphicon glyphicon-ok-circle"></i>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" name="email" id="email" class="form-control" autocomplete="false" required
+            pattern="^.{0,64}$" title="Enter an email address with a maximum of 64 characters."
+            oninput="validateEmail(this);" onchange="validateEmail(this);">
+          <i class="input-glyph glyphicon glyphicon-ok-circle"></i>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" id="password" class="form-control" autocomplete="false" required
+            pattern="^((?=.*[0-9])(?=.*[a-zA-Z])).{6,12}$"
+            title="Enter a password between 6 and 12 characters, containing at least one letter and one number."
+            oninput="validatePassword(this);" onchange="validatePassword(this);">
+          <i class="input-glyph glyphicon glyphicon-ok-circle"></i>
+          <p class="help-block">Passwords must be between 6 and 12 characters long, containing at least one letter and
+            one
+            number. Please note, passwords are case sensitive.
+        </div>
+        <div class="form-group">
+          <label for="passwordConfirm">Confirm Password</label>
+          <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" autocomplete="false"
+            required pattern="^((?=.*[0-9])(?=.*[a-zA-Z])).{6,12}$" title="Passwords must match."
+            oninput="validatePassword(this);" onchange="validatePassword(this);">
+          <i class="input-glyph glyphicon glyphicon-ok-circle"></i>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary pull-right">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script>
+    /*
+    Email regex pattern, same as the HTML5 form validation.
+    https://www.w3.org/TR/html-markup/datatypes.html#form.data.emailaddress
+    */
+    var emailPattern = new RegExp('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
+
+    var form = document.forms['user-registration-form'];
+    var email = form.email;
+    var password = form.password;
+    var passwordConfirm = form.passwordConfirm;
+    var firstName = form.firstName;
+    var lastName = form.lastName;
+
+    // Email length regex pattern.
+    var emailLengthPattern = new RegExp($(email).attr('pattern'));
+
+    // Password regex pattern.
+    var passwordPattern = new RegExp($(password).attr('pattern'));
+
+    // Initialize popover for all required inputs
+    $('input[required]').popover({
+      placement: 'bottom',
+      container: 'body',
+      trigger: 'manual',
+      selector: 'true',
+      content: function () {
+        return $(this).attr('title');
+      },
+      template: '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>'
+    }).focus(function () {
+      $(this).popover('hide');
+    });
+
+    function validateForm(form) {
+
+      // Email validation.
+      if (!emailPattern.test(email.value) || !emailLengthPattern.test(email.value)) {
+        $(email).popover('show');
+        return false;
+      } else {
+        $(email).addClass('valid')
+      }
+
+      // Password validation.
+      if (!passwordPattern.test(password.value)) {
+        $(password).popover('show');
+        return false;
+      }
+
+      // Password confirm validation.
+      if (!passwordPattern.test(passwordConfirm.value)) {
+        $(passwordConfirm).popover('show');
+        return false;
+      }
+
+      // Password match validation.
+      if (password.value !== passwordConfirm.value) {
+        $(passwordConfirm).popover('show');
+        return false;
+      }
+
+      // First name validation.
+      if (firstName.value.length === 0) {
+        $(firstName).popover('show');
+        return false;
+      }
+
+      // Last name validation.
+      if (lastName.value.length === 0) {
+        $(lastName).popover('show');
+        return false;
+      }
+    }
+
+    function validateEmail(input) {
+      if (emailPattern.test(input.value) && emailLengthPattern.test(input.value)) {
+        $(input).addClass('valid')
+      } else {
+        $(input).removeClass('valid');
+      }
+    }
+
+    /*
+    Sets a custom validation to require both password fields to match each other
+    */
+    function validatePassword(input) {
+
+      if (input.setCustomValidity) {
+        input.setCustomValidity('');
+
+        if (input.validity && !input.validity.valid) {
+          input.setCustomValidity(input.title);
+        }
+      }
+
+      if (passwordConfirm.setCustomValidity) {
+        if (password.value !== passwordConfirm.value) {
+          passwordConfirm.setCustomValidity(passwordConfirm.title);
+        } else {
+          passwordConfirm.setCustomValidity('');
+        }
+      } else {
+
+        if (passwordPattern.test(input.value)) {
+          $(input).addClass('valid');
+
+          if (password.value === passwordConfirm.value) {
+            $(passwordConfirm).addClass('valid');
+          } else {
+            $(passwordConfirm).removeClass('valid');
+          }
+        } else {
+          $(input).removeClass('valid');
+        }
+      }
+    }
+
+    function validateRequired(input) {
+
+      if (input.setCustomValidity) {
+        input.setCustomValidity('');
+
+        if (input.validity && !input.validity.valid) {
+          input.setCustomValidity(input.title);
+        }
+      }
+
+      if (input.value.length > 0) {
+        $(input).addClass('valid');
+      } else {
+        $(input).removeClass('valid');
+      }
+    }
+
+  </script>
+</body>
+
+</html>
