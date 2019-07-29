@@ -4,7 +4,7 @@ function numberOfWaysToMakeChange(n, denoms) {
   ways[0] = 1;
 
   for (const denom of denoms) {
-    for (let i = 1; i < n + 1; i++) {
+    for (let i = 1; i <= n; i++) {
       if (denom <= i) {
         ways[i] = ways[i] + ways[i - denom];
       }
