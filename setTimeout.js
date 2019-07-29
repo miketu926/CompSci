@@ -1,4 +1,4 @@
-let arr = [10, 11, 12, 13];
+var arr = [10, 11, 12, 13];
 for (let i = 0; i < arr.length; i++) {
   setTimeout(function () {
     console.log(i, arr[i]);
@@ -10,6 +10,7 @@ for (let i = 0; i < arr.length; i++) {
 // 2 12
 // 3 13
 
+// loop declared with var will have the below answer:
 // his answer:
 // 4 undefined
 // 4 undefined
@@ -17,6 +18,7 @@ for (let i = 0; i < arr.length; i++) {
 // 4 undefined
 
 
+// my original answer
 const flatten = (arr) => {
   const result = [];
 
