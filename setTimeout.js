@@ -1,9 +1,9 @@
-var arr = [10, 11, 12, 13];
+const arr = [10, 11, 12, 13];
 for (let i = 0; i < arr.length; i++) {
   setTimeout(function () {
     console.log(i, arr[i]);
   }, 1000);
-}
+};
 
 // 0 10
 // 1 11
@@ -19,12 +19,15 @@ for (let i = 0; i < arr.length; i++) {
 
 
 // my original answer
+
+const arr2 = [1, 2, [3, 4], 5];
+
 const flatten = (arr) => {
-  const result = [];
+  let result = [];
 
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] instanceof Array) {
-      return flatten(arr[i]);
+    if (Array.isArray(arr[i])) {
+      result = result.concat(flatten(arr[i]));
     } else {
       result.push(arr[i]);
     }
@@ -33,4 +36,4 @@ const flatten = (arr) => {
   return result;
 }
 
-console.log(flatten(arr));
+console.log(flatten(arr2));
