@@ -38,22 +38,42 @@ allPromises.forEach(promise => {
 
 Promise.race(allPromises).then(message => console.log(message));
 
-const settlePromises = async promises => {
+// kevin's code:
+// const settlePromises = promises => {
+//   return new Promise((resolve, reject) => {
+//     const store = [];
 
-  const result = [];
+//     promises.forEach(async promise => {
+//       try {
+//         const result = await promise;
+//         store.push(result);
+//       } catch (e) {
+//         store.push(e);
+//       } finally {
+//         console.log({ store });
+//         resolveStore();
+//         if (store.length === promises.length) {
+//           resolve(store);
+//         }
+//       }
+//     });
+//   });
+// };
 
+// my code:
+const settlePromises = promises => {
   return new Promise((resolve, reject) => {
+    const store = [];
 
-    promises.forEach(promise => {
-
+    promises.forEach(async promise => {
       try {
-        const resolve = await promise();
-        result.push(resolve);
+        const resolve = await promise;
+        store.push(resolve);
       } catch (err) {
-        result.push(err);
+        store.push(err);
       } finally {
-        if (result.length === promises.length) {
-          resolve(result);
+        if (store.length === promises.length) {
+          resolve(store);
         }
       }
     });
@@ -61,7 +81,7 @@ const settlePromises = async promises => {
   // return a promise with .then as an array of objects that describes the outcome of each promise
 };
 
-console.log(settlePromises(allPromises).then(result => console.log(result)));
+console.log(settlePromises(allPromises));
 
 // Async arrow functions look like this:
 
