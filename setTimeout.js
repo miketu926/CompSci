@@ -17,8 +17,7 @@ for (let i = 0; i < arr.length; i++) {
 // 4 undefined
 // 4 undefined
 
-
-// my original answer
+// updated answer - always reset result in order to capture the updated result for that stack
 
 const arr2 = [1, 2, [3, 4], 5];
 
