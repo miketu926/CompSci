@@ -7,7 +7,7 @@ function perms(arr) {
 
     otherPerms.forEach(perm => {
         for (let i = 0; i <= perm.length; i++) {
-            const finalPerm = [ ...perm.slice(0, i), firstEl, ...perm.slice(i) ];
+            const finalPerm = [...perm.slice(0, i), firstEl, ...perm.slice(i)];
             finalPerms.push(finalPerm);
         }
     });

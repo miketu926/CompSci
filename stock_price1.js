@@ -5,13 +5,13 @@ const stockPrice1 = (prices) => {
   let min = prices[0];
   let max = -Infinity;
 
-  for (let i of prices) {
-    min = Math.min(min, i);
-    max = Math.max(max, i - min);
+  for (let price of prices) {
+    min = Math.min(min, price);
+    max = Math.max(max, price - min);
   }
 
 
   return Math.max(0, max);
 };
 
-// console.log(stockPrice1([5, 6, 4, 2, 8, 7, 1, 2, 9, 2]));
+console.log(stockPrice1([5, 6, 4, 2, 8, 7, 1, 2, 9, 2]));
