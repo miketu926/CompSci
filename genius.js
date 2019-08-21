@@ -31,7 +31,7 @@ fs.readFile('input.txt', 'utf8', function (err, contents) {
 
   const words = lineOne.split(",");
   const wordPermutations = generatePermutations(words);
-  console.log(wordPermutations);
+  // console.log(wordPermutations);
   const hashMap = {};
 
   for (const string of wordPermutations) {
@@ -93,6 +93,6 @@ function generateSplits(string, splits) {
 
   _generateSplits(string, splits, []);
 
-  // console.log(scrambledStrings);
+  console.log(scrambledStrings);
   return scrambledStrings;
 }
