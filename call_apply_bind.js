@@ -1,6 +1,6 @@
 // call & apply
 // both are used to help invoke functions - where the first argument 
-// as the value of this within the function call(), apply();
+// is the value of this within the function call(), apply();
 
 const add = (a, b) => {
   return a + b;
@@ -43,3 +43,7 @@ const myBind = (context, ...bindArgs) => {
 const myBind2 = (context, bindArgs) => (callArgs) => {
   return this.call(context, ...bindArgs, ...callArgs);
 }
+
+let arr = [1, 2, 3]
+let arr2 = [...arr];
+console.log(arr2);
