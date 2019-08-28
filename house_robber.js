@@ -13,8 +13,6 @@ const houseRobber = (nums) => {
   return result[result.length - 1];
 };
 
-console.log(houseRobber([1, 2, 3, 1]));
-
 const houseRobberConstantSpace = (nums) => {
   if (nums.length === 0) return 0;
   if (nums.length === 1) return nums[0];
@@ -32,4 +30,5 @@ const houseRobberConstantSpace = (nums) => {
   return right;
 };
 
+console.log(houseRobber([1, 2, 3, 1]));
 console.log(houseRobberConstantSpace([1, 2, 3, 1]));
