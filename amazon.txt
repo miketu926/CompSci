@@ -1,0 +1,30 @@
+1. design problem - design a restaurant menu where the user is able to choose from categories of food (pasta, burger, salad, soup)
+under each category, there will be specific food items with a price point.
+the user is able to choose specific items and toppings as well (a general list of toppings & price for that topping for all foods);
+the user will have a sub-total.
+what API endpoints will we need to make a menu request and to save the order?
+
+2. given a sentence, return the first non-unique word in the sentence. "amazon is amazing and is great"
+
+3. 
+input:
+arr1 = ['a','b','c']
+arr2 = ['1','2','3']
+
+output = all combinations of strings such that the order of placement remains the same within its respective arr1 and arr2s.
+
+for example => 'abc123', 'a123bc', 'a1b2c3'.
+invalid example => 'a2b1c3' because 2 1 3 is not in order of the original arr
+return all combinations in an array
+
+4. given a normal (linux) file structure, how do you return a list of files that match certain
+paramateres (name, file_size, ext, date_created) given a starting
+file/location
+
+const find = (start, name, file_size, ext, date_created) => {
+  
+}
+
+
+[3,2,1,5,4]
+[0,0,1,2,3]
