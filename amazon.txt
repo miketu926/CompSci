@@ -24,7 +24,3 @@ file/location
 const find = (start, name, file_size, ext, date_created) => {
   
 }
-
-
-[3,2,1,5,4]
-[0,0,1,2,3]
