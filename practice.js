@@ -25,24 +25,6 @@ let checkage = age => {
 
 // console.log(a.find(checkage));
 
-
-// flatten(data) => given an array of random subarrays, flatten it so it becomes one single array
-// input: ('this is also an example') output: [ 'this is also an example' ]
-
-const flatten = (data) => {
-  if (!Array.isArray(data)) return [data];
-
-  let result = [];
-
-  data.forEach(el => {
-    let flattened = flatten(el);
-    result.push(...flattened);
-  });
-
-  return result;
-};
-
-
 // BUBBLESORT
 // input: [3,9,4,6,3] -> length 5
 // output: [3,3,4,6,9]
