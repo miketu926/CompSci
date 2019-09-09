@@ -1,98 +1,52 @@
-// a string of words has been chopped up into pieces and rearranged to form a scrambled string
-// find the original string of words.
+// https://gist.github.com/toddwschneider/9f631c7090e5c9c4819bb3a68e076a8f
 
-// you are given a file with 3 lines
-// first line is a list of the words used (like a dictionary) delimited by commas
-// second line is the scrambled string
-// third line is the number of times chopped
+// Take a positive integer, like 9, and apply the following rule:
 
-// example:
+// if it’s odd multiply it by 3 and add 1
+// if it’s even, divide it in half.
+// For example, applying this rule to 9 yields 28
 
-// input.txt
-// 'world,hello'
-// 'rldhello wo'
-// '1'
+// Apply this rule repeatedly and you'll create a chain:
 
-// output should be 'hello world'
+// 9 → 28 → 14 → 7 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1.
+// This particular chain requires 19 steps before it hits 1.
 
-// the input file would be in the local directory, named as input.txt
-const fs = require('fs');
+// The Collatz conjecture says that all such chains will in fact hit 1 eventually. Calling 1 the end of a chain, for what integer less than a million is the Collatz chain the longest?
 
-// generate permutations of the words provided (one of the perms is the answers!)
-// generate possible splits for each of the permutations
-// set a hashMap of the split and map it to the permutation
-// look up the second line in the hashMap to find the correct permutation
+const calculateSteps = (num, memo) => {
+  let steps = 0;
 
+  while (num !== 1) {
+    if (memo[num]) return memo[num] + steps;
 
-fs.readFile('input.txt', 'utf8', function (err, contents) {
-  let lineOne, scrambledString, splits;
+    if (num % 2 !== 0) {
+      num = (num * 3) + 1;
+    } else {
+      num = num / 2;
+    }
+    steps++;
+  }
 
-  [lineOne, scrambledString, splits] = contents.split("\n");
+  memo[num] = steps;
+  return memo[num];
+}
 
-  const words = lineOne.split(",");
-  const wordPermutations = generatePermutations(words);
-  // console.log(wordPermutations);
-  const hashMap = {};
+const collatz = () => {
+  const memo = {}
+  let maxSteps = -Infinity
+  let steps = -Infinity
+  let result = 0
 
-  for (const string of wordPermutations) {
-    let scrambledStrings = flatten(generateSplits(string, splits));
+  for (let i = 1; i < 1000000; i++) {
+    steps = calculateSteps(i, memo);
 
-    for (const scrambledString of scrambledStrings) {
-      hashMap[scrambledString] = string;
+    if (steps > maxSteps) {
+      maxSteps = steps;
+      result = i;
     }
   }
 
-  console.log(hashMap[scrambledString]);
-});
-
-function flatten(arr) {
-  return arr.reduce(function (flat, toFlatten) {
-    return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
-  }, []);
+  return result;
 }
 
-function generatePermutations(words, space = true) {
-  const permutations = [];
-
-  function _generatePermutations(words, size) {
-    if (size === 1) {
-      permutations.push(words.join(space ? " " : ""));
-      return;
-    }
-
-    for (let i = 0; i < size; i++) {
-      _generatePermutations(words, size - 1);
-
-      if (size & 1) {
-        [words[0], words[size - 1]] = [words[size - 1], words[0]]
-      } else {
-        [words[i], words[size - 1]] = [words[size - 1], words[i]]
-      }
-    }
-  }
-
-  _generatePermutations(words, words.length)
-
-  // console.log(permutations);
-  return permutations;
-}
-
-function generateSplits(string, splits) {
-  const scrambledStrings = [];
-
-  function _generateSplits(string, splits, current) {
-    if (splits === 0) {
-      scrambledStrings.push(generatePermutations(current.concat(string), false));
-      return
-    }
-
-    for (var i = 1; i < string.length - splits; i++) {
-      _generateSplits(string.slice(i), splits - 1, current.concat(string.slice(0, i)));
-    }
-  }
-
-  _generateSplits(string, splits, []);
-
-  console.log(scrambledStrings);
-  return scrambledStrings;
-}
+console.log(collatz());
