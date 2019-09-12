@@ -25,26 +25,6 @@ let checkage = age => {
 
 // console.log(a.find(checkage));
 
-const quickSort = arr => {
-  if (arr.length <= 1) {
-    return arr;
-  }
-
-  // shift takes out the element of the array
-  // so that it can reach the base case
-  let pivot = arr.shift();
-  let left = arr.filter(el => el < pivot);
-  let right = arr.filter(el => el >= pivot);
-
-  let leftSorted = quickSort(left);
-  let rightSorted = quickSort(right);
-
-  return [...leftSorted, pivot, ...rightSorted];
-
-};
-
-// console.log(quickSort([3, 5, 2, 1, 0, 9]));
-
 const powerOfTen = (num) => {
 
   while (num >= 10) {
