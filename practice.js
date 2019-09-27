@@ -25,14 +25,6 @@ let checkage = age => {
 
 // console.log(a.find(checkage));
 
-const mySort = (arr) => {
-  // sorting DOES NOT HAVE {} block
-  arr.sort((a, b) => a - b);
-  return arr;
-};
-
-// console.log(mySort([1, 3, 2, -1, -3]));
-
 // min length of subarray with sum >= target
 // [1,2,3,4] target = 6
 
