@@ -28,6 +28,4 @@ const merge = (arr1, arr2) => {
   return [...merged, ...arr1, ...arr2];
 };
 
-
-// mergeSort test:
-// console.log(mergeSort([3, 5, 2, 1, 0, 9]));
+console.log(mergeSort([-2, 3, 5, 2, 1, 0, 9]));
