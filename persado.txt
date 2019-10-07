@@ -1,0 +1,10 @@
+Ruby specific question - Some white-boarding, some conceptual questions
+Rails specific question - white-boarding
+JS specific question  - JS characteristics/white-boarding
+
+- How do you use the revealing module pattern in JS?
+- What is single-type inheritance in Rails?
+- Write a function that when given N (number of steps) and M (maximum steps a person can take at a time), 
+return the total number of possible sequences where the person can go from level 0 to level N.
+- How would you go about writing a Ruby class 
+responsible for interpreting data and outputting queries to a statistical program written in R?
