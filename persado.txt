@@ -3,8 +3,67 @@ Rails specific question - white-boarding
 JS specific question  - JS characteristics/white-boarding
 
 - How do you use the revealing module pattern in JS?
+
 - What is single-type inheritance in Rails?
+
 - Write a function that when given N (number of steps) and M (maximum steps a person can take at a time), 
 return the total number of possible sequences where the person can go from level 0 to level N.
-- How would you go about writing a Ruby class 
-responsible for interpreting data and outputting queries to a statistical program written in R?
+
+- How would you go about writing a Ruby class responsible for 
+interpreting data and outputting queries to a statistical program written in R?
+
+- Write a function that takes a year, and a month func(year, month), and 
+given a function called leap(year) which returns 1 or 0, if it is a leap year or 
+not, write the function definition for func(year, month), without branching 
+statements such that func(year, month) returns the correct number of days
+
+- Create an ERD for Users, Blogs, Posts, Comments (EASY)
+
+Write a query that would produce this: 
+=> normal joins table with one column that is a collection of the blogs users have
+(EASY)
+
+- Build a react component that makes some API request and renders the data accordingly (EASY)
+
+- A whole bunch of JS general knowledge questions:
+what is the event loop
+what is an uncontrolled input
+what is a Promise
+what are all the ways to define a global variable
+
+- Given an array that contains multiple hashes, create a new hash that combines all of the hash keys and values.
+Each key in the new hash should have all unique values.
+Cannot use any conditional statements such as if, else, ... ? ... : ... .
+
+[{
+ a: "APR",
+ b: true
+},
+{
+ a: "APR",
+ b: false
+}]
+
+=> {
+    a: ("APR"),
+    b: (true, false)
+    }
+
+- Given a database that has duplicate users. Remove the duplicates so 
+you can install a unique index on that table 
+The interviewer did not expect job seeker to come up with an answer and 
+told them he would be impressed if the job seeker came anywhere close
+
+- Given a binary tree, return the total height of the tree except
+An empty tree is pre-defined as 0 (as opposed to -1)
+
+- There are 100 people, and we want to divide them into three even buckets. This 
+can be visualized as [33, 33, 33]. (Note, that this adds up to 99, not 100). 
+What it should really return is [34, 33, 33]. Write a method that takes in a 
+number n and number of buckets b and produces the 
+desired result. (e.g. 15 into 5 buckets => [3, 3, 3, 2, 2])
+
+- Given a create-react-app setup and an imported file of data, 
+display all the text that has the key "text" as one sentence.
+The data is super nested and requires the use of 
+recursion to access all "text" keys.
