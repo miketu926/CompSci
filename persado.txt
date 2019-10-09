@@ -2,9 +2,75 @@ Ruby specific question - Some white-boarding, some conceptual questions
 Rails specific question - white-boarding
 JS specific question  - JS characteristics/white-boarding
 
-- How do you use the revealing module pattern in JS?
+view -> formatted delivery of your data
+flash only lasts for one more redirect
 
-- What is single-type inheritance in Rails?
+- How do you use the revealing module pattern in JS?
+Wrapping public and private functions within a function, and returning only the public
+APIs in a hashMap to be called later. The outer function is considered to be the module
+which has access to the public APIs when called.
+
+    // musicPlayerModule.js
+
+    const musicPlayer = function () {
+        // Let's make sure no one can directly access our songList
+        var songList = ['California Girls', 'California Dreaming', 'Hotel California'];  
+
+        // We'll expose all these functions to the user
+        function play () {
+            console.log('Im playing the next song!');
+        }
+
+        function pause () {
+            console.log('Im paused!');
+        }
+
+        function addTrackToMusicQueue (track) {
+            songList.push(track);
+            console.log('I added a song');
+        }
+
+        function showNextTrack () {
+            console.log('My next track is', songList[0]);
+        }
+
+        // Let's hide this function
+        function loadSong() {
+            filesystem.loadNextSong();
+        }
+
+        return {
+            playMusic: play,
+            pauseMusic: pause,
+            showNextTrack: showNextTrack,
+            addTrack: addTrackToMusicQueue
+        }
+    }
+
+    const musicModule = musicPlayer(); // invoke our musicPlayer to return it's object (module)
+    musicModule.playMusic(); // 'Im playing the next song!'
+    musicModule.pauseMusic(); // 'I'm paused!'
+    musicModule.showNextTrack(); // 'The next track is California Girls'
+
+    // Things we can't access...
+    musicModule.loadSong(); // error: not a function
+    musicModule.songList.push('White Rabbit'); // undefined error
+
+
+- What is single-type inheritance in Rails? (OK)
+A single-type inheritane typically has a base model where the attributes are the same for all types.
+However, the difference comes when each type has it's own attributes, in addition to the attributes
+from the base model. This is to retain a level of uniquness and reduce duplication of data.
+For example: You can have a USERS table with USERS attributes. You can then have USERS of different
+types, such as EMPLOYEES, CLIENTS, PARTNERS, BOARDMEMBERS. Each one of these type may have
+their own attributes and validations within each of their perspective model, which also inherits from
+the USERS model.
+
+- What is a polymorphic association in Rails? (OK)
+A polymorphic association occurs when there is one attribute that can be found in many tables.
+For example: stored profile images could be for types of EMPLOYEE, CLIENT, PARTNER, OR BOARDMEMBER.
+This differientation can be taken care of by a type and id attribute of the Image model class.
+Then the polymorphic assocation can be made under each type.
 
 - Write a function that when given N (number of steps) and M (maximum steps a person can take at a time), 
 return the total number of possible sequences where the person can go from level 0 to level N.
@@ -17,13 +83,13 @@ given a function called leap(year) which returns 1 or 0, if it is a leap year or
 not, write the function definition for func(year, month), without branching 
 statements such that func(year, month) returns the correct number of days
 
-- Create an ERD for Users, Blogs, Posts, Comments (EASY)
+- Create an ERD for Users, Blogs, Posts, Comments (OK)
 
 Write a query that would produce this: 
 => normal joins table with one column that is a collection of the blogs users have
-(EASY)
+(OK)
 
-- Build a react component that makes some API request and renders the data accordingly (EASY)
+- Build a react component that makes some API request and renders the data accordingly (OK)
 
 - A whole bunch of JS general knowledge questions:
 what is the event loop
