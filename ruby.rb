@@ -12,7 +12,7 @@ def some_problem(arr, string = "a")
 
   p string
   p hash
-  p string[1..2]
+  p string[1..2] #inclusive .., exclusive ...
   p result[1..2]
   return result
 end
