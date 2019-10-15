@@ -16,3 +16,12 @@ for (let i = 0; i < arr.length; i++) {
 // 4 undefined
 // 4 undefined
 // 4 undefined
+
+// like this:
+
+const arr2 = [10, 11, 12, 13];
+for (var i = 0; i < arr.length; i++) {
+  setTimeout(function () {
+    console.log(i, arr[i]);
+  }, 1000);
+};
