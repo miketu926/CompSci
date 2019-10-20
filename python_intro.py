@@ -1,6 +1,22 @@
 arr = ['item1', 'item2', 'item3']
+num = [-2,5,2,7]
+
 print(arr[1:])
-print(arr[1:2))
+print(arr[1:2])
+
+# null == None
+
+# to make a copy using slice notation
+print(arr[:])
+
+# sort vs sorted. sort is in-place, sorted creates a new list.
+# to reverse sort pass in reverse = True
+
+sorted_num = sorted(num)
+reverse_num = sorted(num, reverse = True)
+
+print(sorted_num)
+print(reverse_num)
 
 for item in arr:
   print(item)
@@ -8,8 +24,15 @@ for item in arr:
 for i in range(len(arr)):
   print(arr[i])
 
-for item in arr:
+for item in arr[1:]:
   print(item)
+
+# advanced for loop using and / and not / or
+for item in arr:
+  if item == 'item1' and item[0] == 'i' or item == 'item2' and not item == 'item3':
+    print(item)
+
+[print (item) for item in arr if item == 'item1' or item == 'item2' and not item == 'item3']
 
 arr.append("another item")
 print(arr)
@@ -22,9 +45,10 @@ for key in dictionary:
 print(dictionary.keys())
 print(dictionary.values())
 
-# the bottom produces an array of tuples within ()
+# the bottom produces an array of tuples designiated with ()
 dictionary_items = dictionary.items()
-print(type(dictionary_items[0]))
+print(dictionary_items)
+print(type(dictionary_items))
 
 s = set()
 s.add(1)
