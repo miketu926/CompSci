@@ -27,7 +27,7 @@ for i in range(len(arr)):
 for item in arr[1:]:
   print(item)
 
-# advanced for loop using and / and not / or
+# advanced: for loop using and / and not / or
 for item in arr:
   if item == 'item1' and item[0] == 'i' or item == 'item2' and not item == 'item3':
     print(item)
