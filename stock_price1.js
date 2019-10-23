@@ -1,6 +1,8 @@
 // 1) Given arr of stock prices, find the one biggest jump that nets you the most profit
 // ex: [5, 6, 4, 2, 8, 7, 1, 2, 9, 2]: ans is 8(9 - 1)
 
+// strategy: capture the currentMin and the maxDifference of price-currentMin in one run
+
 const stockPrice1 = (prices) => {
   let min = prices[0];
   let max = -Infinity;
