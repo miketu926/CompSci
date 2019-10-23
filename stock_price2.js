@@ -1,6 +1,11 @@
 // 1) Given arr of stock prices, find the max profit with as many possible buys/sells as possible
 // ex: [5, 6, 4, 2, 8, 7, 1, 2, 9, 2]: ans is 15
 
+// go through the array once, and at each time calculate the difference between the
+// current and previous. If it' greater than 0, than add that amount to profit.
+// return the profit at the end
+// another way of looking at it: calculate the positive diff of every pair which will equal the profit
+
 const stockPrice2 = (prices) => {
   let profit = 0;
 
