@@ -18,8 +18,8 @@ const flatten = (arr) => {
 const flattenClosure = (arr) => {
   const result = [];
 
-  const _recurse = (arr) => {
-    for (const el of arr) {
+  const _recurse = (item) => {
+    for (const el of item) {
       if (Array.isArray(el)) {
         _recurse(el);
       } else {
