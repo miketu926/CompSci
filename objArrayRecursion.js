@@ -28,7 +28,6 @@ const addAges = (profile) => {
       addAges(kid);
     }
 
-
     return allAges;
   }
 }
