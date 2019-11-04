@@ -6,3 +6,10 @@
 //   console.log('three');
 // })
 // console.log('four');
+
+(function () {
+  const name = 'collin'
+  console.log(name);
+})();
+
+// var name = 'collin'

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <style>
+    .clicked {
+      background-color: blue;
+    }
+  </style>
+
+</body>
+
+<script>
+  let h1 = document.createElement('h1');
+  let body = document.body;
+
+  let text = document.createTextNode('hi');
+  document.create
+
+  h1.append(text);
+  body.append(h1);
+
+  let ul = document.createElement('ul');
+
+  const alpha = 'abcdefghijklmnopqrstuvwxyz'
+
+  for (let letter of alpha) {
+    let li = document.createElement('li')
+    // li.setAttribute('id', letter)
+    li.id = letter;
+
+    li.addEventListener('click', () => {
+      li.classList.toggle('clicked')
+    })
+
+    li.append(letter)
+    ul.append(li);
+
+  }
+  body.append(ul);
+
+  // css selector
+  let a = document.querySelector('#a');
+  ul.removeChild(a);
+
+
+  let style = document.querySelector('style')
+  debugger
+
+
+</script>
+
+
+</html>
