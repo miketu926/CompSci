@@ -8,8 +8,12 @@
 // console.log('four');
 
 (function () {
+  // console.log(name);
+  console.log(test);
   const name = 'collin'
+  var test = "HI"
   console.log(name);
+  console.log(test);
 })();
 
 // var name = 'collin'

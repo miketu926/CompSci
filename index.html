@@ -34,6 +34,7 @@
 
   for (let letter of alpha) {
     let li = document.createElement('li')
+    // either one of the below works: access attributes directly since they already have a place
     // li.setAttribute('id', letter)
     li.id = letter;
 
@@ -51,9 +52,7 @@
   let a = document.querySelector('#a');
   ul.removeChild(a);
 
-
   let style = document.querySelector('style')
-  debugger
 
 
 </script>
