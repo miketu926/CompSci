@@ -25,7 +25,7 @@ const fibs = (n) => {
   let second = 1;
   let next;
 
-  // n = 3, first = n-1, second = n-2
+  // n = 3, first = n-1 + second = n-2
 
   for (let i = 3; i <= n; i++) {
     next = first + second;
