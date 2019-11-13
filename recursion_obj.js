@@ -1,7 +1,7 @@
 const input = `
     {
       "name": "Charizard",
-      "moveset": {
+      "moveset0": {
         "slot1": {
           "name": "Fire Spin",
           "pp": 10
@@ -53,5 +53,30 @@ function makePairs(json) {
   return result;
 }
 
+// another input with more nesting
+const input2 = `
+    {
+      "name": "Charizard",
+      "moveset0": {
+        "slot1": {
+          "name": "Fire Spin",
+          "pp": 10
+        },
+        "slot2": null
+      },
+      "isLegendary": false,
+      "moveset1" : {
+        "slot3" : {
+          "name": "Water Spin",
+          "pp": 20
+        },
+        "slot4": null
+      },
+      "isLegendary1": true
+    }
+  `;
+
+
 console.log(`\n------answer------\n`, makePairs(input), `\n------answer------`)
+console.log(`\n------answer------\n`, makePairs(input2), `\n------answer------`)
 // makePairs(input);
