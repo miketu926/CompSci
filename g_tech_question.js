@@ -1,5 +1,3 @@
-// https://gist.github.com/toddwschneider/9f631c7090e5c9c4819bb3a68e076a8f
-
 // Take a positive integer, like 9, and apply the following rule:
 
 // if it’s odd multiply it by 3 and add 1
