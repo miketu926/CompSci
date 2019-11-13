@@ -12,6 +12,7 @@ const input = `
     }
   `;
 
+// make an array of tuples in this format
 // output:
 // [
 //   [name, charizard],
@@ -21,20 +22,23 @@ const input = `
 //   [isLegendary: false]
 // ]
 
-// [['name', 'Charizard'],
-//   ['moveset', { slot1: [Object], slot2: null }],
-//   ['isLegendary', false]]
-
 function makePairs(json) {
   const entries = Object.entries(JSON.parse(json));
-  const result = [];
+  let result = [];
+  let additional = [];
 
   const _recurse = (obj, builtString) => {
-    for (let key in obj) {
-      if (typeof obj[key] === 'object' && typeof obj[key] !== null) {
-        return _recurse(obj[key], `${builtString}.${key}`)
+    if (!obj) return additional.push([builtString, obj]);
+    // console.log(obj);
+    let entries = Object.entries(obj);
+    // console.log(entries);
+
+    for (let item of entries) {
+      // console.log(entries);
+      if (typeof item[1] === 'object' && typeof item[1] !== null) {
+        _recurse(item[1], `${builtString}.${item[0]}`)
       } else {
-        return [`${builtString}.${key}`, obj[key]]
+        additional.push([`${builtString}.${item[0]}`, item[1]]);
       }
     }
   };
@@ -44,13 +48,14 @@ function makePairs(json) {
       result.push(pair);
     } else {
       // recurse function handles a new object as first param, 2nd param handles key
-      let newPair = _recurse(pair[1], pair[0]);
-      result.push(newPair);
+      _recurse(pair[1], pair[0])
+      result = result.concat(additional);
+      additional = [];
     }
   }
 
   return result;
 }
 
-console.log(makePairs(input))
+console.log(`\n------answer------\n`, makePairs(input), `\n------answer------`)
 // makePairs(input);
