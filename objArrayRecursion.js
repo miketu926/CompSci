@@ -17,19 +17,19 @@ const profile = {
       ]
     }
   ]
-}
+};
+
+// output should be 25 totalAge
 
 const addAges = (profile) => {
-  let allAges = profile.age;
+  let age = profile.age;
+  if (!profile.kids) return age;
 
-  if (Array.isArray(profile.kids)) {
-    for (const kid of profile.kids) {
-      allAges = allAges + kid.age;
-      addAges(kid);
-    }
-
-    return allAges;
+  for (const kid of profile.kids) {
+    age += addAges(kid);
   }
+
+  return age;
 }
 
 console.log(addAges(profile));
