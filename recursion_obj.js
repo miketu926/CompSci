@@ -28,14 +28,10 @@ function makePairs(json) {
   let additional = [];
 
   const _recurse = (obj, builtString) => {
-    if (!obj) return additional.push([builtString, obj]);
-    // console.log(obj);
     let entries = Object.entries(obj);
-    // console.log(entries);
 
     for (let item of entries) {
-      // console.log(entries);
-      if (typeof item[1] === 'object' && typeof item[1] !== null) {
+      if (typeof item[1] === 'object' && item[1] !== null) {
         _recurse(item[1], `${builtString}.${item[0]}`)
       } else {
         additional.push([`${builtString}.${item[0]}`, item[1]]);
