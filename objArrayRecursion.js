@@ -22,8 +22,8 @@ const profile = {
 // output should be 25 totalAge
 
 const addAges = (profile) => {
+  if (!profile.kids) return profile.age;
   let age = profile.age;
-  if (!profile.kids) return age;
 
   for (const kid of profile.kids) {
     age += addAges(kid);
