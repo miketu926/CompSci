@@ -1,10 +1,10 @@
 const binarySearch = (arr, target) => {
-
   let L = 0;
   let R = arr.length - 1;
 
   while (L <= R) {
-    let mid = Math.floor((R + L) / 2);
+    // no overflow of integers if you're adding the difference
+    let mid = Math.floor(L + (R - L) / 2);
 
     if (arr[mid] === target) {
       return mid;
