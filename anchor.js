@@ -30,4 +30,4 @@ const findUniques = (para) => {
 }
 
 console.log(findUniques(paragraph))
-console.log(findUniques("HI"))
+console.log(findUniques("Hi"))
