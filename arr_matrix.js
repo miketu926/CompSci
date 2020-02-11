@@ -40,8 +40,6 @@ const _dfs = (word, i, j, matrix, count) => {
 
   // turn used letters into null so it doesn't count twice
   // how to track used letters once a full word is found?
-  let temp = matrix[i][j];
-  matrix[i][j] = null;
 
   let wordFound = _dfs(word, i + 1, j, matrix, count + 1)
     || _dfs(word, i - 1, j, matrix, count + 1)
