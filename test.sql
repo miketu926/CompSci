@@ -4,3 +4,5 @@
 
 SELECT * FROM "TABLE"
 WHERE "NAME" LIKE "%fdafda"
+
+-- end testing
