@@ -1,7 +1,7 @@
 const outputReport = (obj) => {
   let result = {};
 
-  function _recurse(obj, prev = "") {
+  const _recurse = (obj, prev = "") => {
     for (const key in obj) {
       if (obj[key].toString() === obj[key]) {
         result[prev + key] = obj[key];
