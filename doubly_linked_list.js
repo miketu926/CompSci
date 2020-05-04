@@ -20,15 +20,15 @@ class LinkedList {
 
   }
 
-  insertBefore(node, data) {}
+  insertBefore(node, data) { }
 
-  insertAfter(node, data) {}
+  insertAfter(node, data) { }
 
-  insertAtPosition(position, data) {}
+  insertAtPosition(position, data) { }
 
-  remove(data) {}
+  remove(data) { }
 
-  findNodeWithData(data) {}
+  findNodeWithData(data) { }
 
 
 

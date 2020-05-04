@@ -1,4 +1,4 @@
-var obj = {
+const obj = {
   2: 43,
   "US": 19,
   "IN": 395,
@@ -7,8 +7,8 @@ var obj = {
   "SA": 17,
 };
 
-var array = [];
-for (var key in obj) {
+const array = [];
+for (const key in obj) {
   array.push({
     name: key,
     value: obj[key]
