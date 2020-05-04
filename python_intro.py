@@ -4,7 +4,7 @@ num = [-2,5,2,7]
 print(arr[1:])
 print(arr[1:2])
 
-# null == None
+# None == null
 
 # to make a copy using slice notation
 print(arr[:])
@@ -37,6 +37,7 @@ for item in arr:
 arr.append("another item")
 print(arr)
 
+# dictionary is a hashmap
 dictionary = {'foo': 1, 'bar': 2, 'baz': 3}
 
 for key in dictionary:
