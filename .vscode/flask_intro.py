@@ -8,3 +8,10 @@ import connect from mongoengine
 
 # method 2 of connecting to mongodb
 # or use mongoclient() from pymongo to connect
+
+
+# mongodb basics
+# a DB has many Collections
+# a Collection has many Documents
+# a Document can have EmbeddedDocuments (documents associated with another collection)
+# There are numerous Fields (StringField, IntField, URLField...etc)
