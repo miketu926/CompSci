@@ -19,3 +19,7 @@ from pymongo import MongoClient
 
 # Mongoengine - has a class model structure
 # There are numerous Fields (StringField, IntField, URLField...etc)
+
+# Querying:
+# Queries return a mongoengine.QuerySet - can chain queries as well like:
+# Users.objects(gender='female').only('name').exclude('id').values_list('name')
