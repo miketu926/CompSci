@@ -56,3 +56,9 @@ s.add(1)
 print(s)
 s.clear()
 print(s)
+
+# casting data structures
+simpleList = [1,2,3,4]
+print(str(simpleList))
+print(dict(**simpleList))
+print(list(simpleList))
