@@ -7,3 +7,7 @@ simpleList = [1,2,3,4]
 print(str(simpleList))
 print(dict(**simpleList))
 print(list(simpleList))
+print(int('100'))
+print(float('1.222'))
+
+# Python errors:
