@@ -11,3 +11,4 @@ print(int('100'))
 print(float('1.222'))
 
 # Python errors:
+# General exceptions: Exceptions
