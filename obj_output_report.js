@@ -35,4 +35,4 @@ const obj = {
 //   "b_e_f": "4",
 // }
 
-// console.log(outputReport(obj));
+console.log(outputReport(obj));
