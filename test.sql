@@ -2,7 +2,7 @@
 
 -- basics
 
--- case when then else staatement example
+-- case when then else staatement example:
 SELECT SUM(TB.age), CASE when TB2.name = 'mike' then 1 else 0 END as '1/0 column if mike',
 -- if needed to reference another table, 
     (
