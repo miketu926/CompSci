@@ -8,6 +8,9 @@ from mongoengine import connect
 # takes in mongodb's username, password, host url, etc
 # use blueprint connect to connect blueprint models to the app
 
+# using mongoengine, can connect to multiple databases and alias them
+# to be used within models through meta
+
 # method 2
 from pymongo import MongoClient
 
