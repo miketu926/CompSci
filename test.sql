@@ -17,3 +17,4 @@ GROUP BY TB.age, TB2.name
 ORDER BY TB.age, TB2.name
 
 -- end testing
+-- know ETL (extract, transform, load)
