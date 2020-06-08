@@ -18,3 +18,4 @@ ORDER BY TB.age, TB2.name
 
 -- end testing
 -- know ETL (extract, transform, load)
+-- extract is querying for data
