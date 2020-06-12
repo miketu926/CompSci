@@ -19,3 +19,4 @@ ORDER BY TB.age, TB2.name
 -- end testing
 -- know ETL (extract, transform, load)
 -- extract is querying for data
+-- transform is manipulating and also creating new tables
