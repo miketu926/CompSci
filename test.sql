@@ -21,3 +21,6 @@ ORDER BY TB.age, TB2.name
 -- extract is querying for data
 -- transform is manipulating and also creating new tables
 -- load serves this data
+-- copying data from one or more sources into a destination system
+-- which represents the data differently from the sources
+-- or in a different context than the sources
