@@ -19,7 +19,7 @@ ORDER BY TB.age, TB2.name
 -- end testing
 -- know ETL (extract, transform, load)
 -- extract
--- transform is manipulating and also creating new tables
+-- transform
 -- load serves this data
 -- copying data from one or more sources into a destination system
 -- which represents the data differently from the sources
