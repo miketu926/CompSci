@@ -24,3 +24,4 @@ ORDER BY TB.age, TB2.name
 -- copying data from one or more sources into a destination system
 -- which represents the data differently from the sources
 -- or in a different context than the sources
+-- loading would be to provide this data to either frontend or to another system
