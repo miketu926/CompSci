@@ -7,3 +7,4 @@ for (var i = 0; i < 3; i++) {
 console.log(x);
 
 // answer is 16
+// no one uses var anymore
