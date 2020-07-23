@@ -8,3 +8,4 @@ console.log(x);
 
 // answer is 16
 // no one uses var anymore
+// trick question
