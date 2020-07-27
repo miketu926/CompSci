@@ -1,5 +1,7 @@
 a = [1, 2, 3, 4, 5];
 
+// find is for arrays
+
 let checkage = age => {
   return age > 2;
 };
