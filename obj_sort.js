@@ -18,6 +18,6 @@ for (const key in obj) {
 array.sort((a, b) => b.value - a.value);
 
 console.log(parseInt(array[1].name));
-console.log("STRING")
 
 console.log(~~false + 1)
+console.log(~~false) // what is ~~ ?
