@@ -21,3 +21,4 @@ console.log(parseInt(array[1].name));
 
 console.log(~~false + 1)
 console.log(~~false) // what is ~~ ?
+// ~N = -(N+1)
