@@ -19,7 +19,7 @@ array.sort((a, b) => b.value - a.value);
 
 console.log(parseInt(array[1].name));
 
-console.log(~~false + 1) // 1
+console.log(~~false + 1) // 1 (this is commonly used when setting initial maps since the key will be undefined)
 console.log(~~false) // what is ~~ ?
 // ~N = -(N+1)
 // ~~(false + 1) = 1
