@@ -24,7 +24,7 @@ console.log(~~false + 1) // 1 (this is commonly used when setting initial maps s
 // const freqMap = {};
 // for (const num of nums) {
 //   freqMap[num] = ~~freqMap[num] + 1;
-// }
+// };
 console.log(~~false) // what is ~~ ?
 // ~N = -(N+1)
 // ~~(false + 1) = 1
