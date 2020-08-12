@@ -15,7 +15,12 @@ for (const key in obj) {
   });
 }
 
-array.sort((a, b) => b.value - a.value);
+const sortedArray = array.sort((a, b) => a.value - b.value);
+console.log(sortedArray);
+
+const notInOrder = [2, 4, 4, 1, 6, 5, 2, 3];
+const inOrder = notInOrder.sort((a, b) => a - b);
+console.log(inOrder);
 
 console.log(parseInt(array[1].name));
 
