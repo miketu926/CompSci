@@ -19,4 +19,4 @@ const counterV2 = (str) => {
 
 console.log(counterV1(str));
 console.log(counterV2(str));
-console.log(counterV3(str));
+// console.log(counterV3(str));
