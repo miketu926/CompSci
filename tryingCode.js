@@ -1,8 +1,8 @@
-const State = 'thisState';
+const arr = [1, 4, 5, 6];
 
+const testArr = Array.from(arr, () => null);
 
-const getState = () => {
-    console.log(State);
-};
+const testArr2 = Array(4).fill(null);
 
-getState();
+console.log(testArr);
+console.log(testArr2);
