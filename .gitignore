@@ -3,3 +3,5 @@ amazon_perm.js
 persado.txt
 MaestroQA.js
 node_modules/
+bundler/
+package-lock.json
