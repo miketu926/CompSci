@@ -141,7 +141,7 @@ const animationLoop = () => {
     window.requestAnimationFrame(animationLoop)
 }
 
-animationLoop()
+// animationLoop()
 
 
 
