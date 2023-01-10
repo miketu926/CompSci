@@ -155,7 +155,7 @@ const anotherBoxGeometry = new THREE.BoxGeometry(
 
 
 // use a float32array for efficiency
-const positionsArray = new Float32Array(9)//
+const positionsArray = new Float32Array(9) // or 1 face with 3 vertexes and each vertex with 3 coords
 
 positionsArray[0] = 0 // x y z for first vertex
 positionsArray[1] = 0
@@ -211,7 +211,7 @@ const anotherMesh = new THREE.Mesh(
 // test myself: create a mesh using bufferGeometry and add it to scene
 // FIRST MGM
 
-const testNumOfFaces = 1000;
+const testNumOfFaces = 50;
 const efficientArr = new Float32Array(testNumOfFaces * 3 * 3)
 // provide random numbers for now
 const efficientlyMapped = efficientArr.map(() => Math.random() - 0.5)
