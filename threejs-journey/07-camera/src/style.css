@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    overflow: hidden;
+    /* this prevents overflow on html and body to prevent trackpad scrolling into white */
+}
+
+.webgl {
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+    /* outline none eliminates blue screen highlight*/
+}
