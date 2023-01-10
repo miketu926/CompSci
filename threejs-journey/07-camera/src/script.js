@@ -14,6 +14,32 @@ const sizes = {
     height: window.innerHeight,
 }
 
+// listen to window resize to update canvas sizing
+window.addEventListener('resize', (e) => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+
+    // update aspect
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+
+    // update renderer
+    renderer.setSize(sizes.width, sizes.height)
+})
+
+window.addEventListener('dblclick', () => {
+    // catpure for safari 
+    const fullScreenElem = document.fullscreenElement || document.webkitFullscreenElement;
+    // ensure conditions for webkitRequestFullScreen() b/c safari
+    // ensure conditions for webkitExitFullScreen() b/c safari
+
+    if (!document.fullscreenElement) {
+        canvas.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+})
+
 // Scene
 const scene = new THREE.Scene()
 
@@ -63,7 +89,9 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.setSize(sizes.width, sizes.height)
-
+// renderer.setPixelRatio(window.devicePixelRatio) 
+// limit this for devices w/ higher than 2 (not necessary beyond 2)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // !!!!TOPIC: Controls
 const cursor = {
@@ -94,6 +122,119 @@ const cursor = {
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+
+
+
+// !!!!TOPIC: Geometries
+// Geometries are vertices (points) and faces (triangles)
+// geometries can create particles or meshes
+// particles are just on the vertices (points) and each point is a particle
+// each vertex has POSITION, UV coords, NROMAL, ... everything
+
+
+// Geometries < BoxGeometry || ... see geometry examples in threejsdocs
+const box = {
+    width: 1, // size on x axis
+    height: 1, // size on y axis
+    depth: 1, // size on z axis
+    widthSegments: 10, // how many subdivisions in the x axis
+    heightSegments: 10,
+    depthSegments: 10,
+} // segments how many triangles on each face
+
+
+// create your own geometry!
+const anotherBoxGeometry = new THREE.BoxGeometry(
+    box.width,
+    box.height,
+    box.depth,
+    box.widthSegments,
+    box.heightSegments,
+    box.depthSegments,
+)
+
+
+// use a float32array for efficiency
+const positionsArray = new Float32Array(9)//
+
+positionsArray[0] = 0 // x y z for first vertex
+positionsArray[1] = 0
+positionsArray[2] = 0
+
+positionsArray[3] = 0 // x y z for second vertex
+positionsArray[4] = 1
+positionsArray[5] = 0
+
+positionsArray[6] = 1 // x y z for thrid vertex
+positionsArray[7] = 0
+positionsArray[8] = 0
+
+const anotherWay = new Float32Array([0, 0, 0, 0, 1, 0, 1, 0, 0]);
+const positionsAttribute = new THREE.BufferAttribute(anotherWay, 3) // the 3 here contains 3 values each vertex
+// for UV coords, it's 2 values per vertex, for particles, it's just 1 for 1 particle
+
+const bufferGeometry = new THREE.BufferGeometry(); // use this to create your own vertexes
+// 'position' values are used in shaders
+bufferGeometry.setAttribute('position', positionsAttribute)
+
+scene.remove(mesh)
+
+// now to create more triangles
+const count = 50; // 50 'triangle' faces have 3 vertices each and in each vertex there are 3 coords 
+const anotherPositionsArray = new Float32Array(count * 3 * 3)
+// fill with random values
+
+const mapped = anotherPositionsArray.map(() => Math.random() - 0.5)
+// for (let i = 0; i < count * 3 * 3; i++) {
+//     anotherPositionsArray[i] = Math.random() - 0.5; // this chooses not from 0-1 but from -0.5 to 0.5
+// }
+console.log(mapped)
+const anotherPositionsAttribute = new THREE.BufferAttribute(mapped, 3);
+const anotherBufferGeometry = new THREE.BufferGeometry()
+anotherBufferGeometry.setAttribute('position', anotherPositionsAttribute)
+
+
+// MESH NEEDS GEOMETRY AND MATERIAL (MGM!!!!!)
+
+const anotherMesh = new THREE.Mesh(
+    // anotherBoxGeometry,
+    // bufferGeometry,
+    anotherBufferGeometry,
+    new THREE.MeshBasicMaterial({
+        color: 'blue',
+        wireframe: true,
+    }),
+)
+
+
+
+// test myself: create a mesh using bufferGeometry and add it to scene
+// FIRST MGM
+
+const testNumOfFaces = 1000;
+const efficientArr = new Float32Array(testNumOfFaces * 3 * 3)
+// provide random numbers for now
+const efficientlyMapped = efficientArr.map(() => Math.random() - 0.5)
+
+// then create BufferGeometry using some BufferedAttribute
+const efficientlyBufferedAttribute = new THREE.BufferAttribute(efficientlyMapped, 3)
+const efficientlyBufferedGeometry = new THREE.BufferGeometry();
+efficientlyBufferedGeometry.setAttribute('position', efficientlyBufferedAttribute)
+
+const testMesh = new THREE.Mesh(
+    // G then M
+    //bufferGeometry
+    efficientlyBufferedGeometry,
+    new THREE.MeshBasicMaterial({
+        color: 'red',
+        wireframe: true,
+    })
+)
+
+// then add mesh to scene
+
+scene.add(testMesh)
+scene.add(anotherMesh)
 
 
 // Animate
