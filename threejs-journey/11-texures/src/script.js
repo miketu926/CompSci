@@ -75,7 +75,7 @@ colorTexture.magFilter = THREE.NearestFilter;
 // jpg is lossy compression but files are lighter, png is lossless compression but heavier with transparency
 // use tinypng.com, use basis.
 
-// use power of 2 textures so that mipmapping is more efficient otherwise threejs will reduce which takes more time
+// use power of 2 textures so that mipmapping is more efficient otherwise threejs will resize which takes more time
 
 /**
  * Base
