@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper'
 import * as dat from 'lil-gui'
 
 /**
@@ -16,16 +17,72 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Lights
+ * !!!!TOPIC !!!! LIGHTS
  */
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const pointLight = new THREE.PointLight(0xffffff, 0.5)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight)
+// all rays are parallel coming from 1 direction
+const directionalLight = new THREE.DirectionalLight('white', 0.5);
+// scene.add(directionalLight)
+
+// red from the top, blue from the bottom, purple mixed
+// grass and sky is a good example
+const hemisphereLight = new THREE.HemisphereLight('red', 'blue', 0.3);
+// scene.add(hemisphereLight);
+
+const pointLight = new THREE.PointLight('white', 0.5, 10, 2);
+pointLight.position.set(1, -0.5, 1)
+scene.add(pointLight);
+// the 3rd parameter is the distance that the point light will travel to
+// and the 4th parameter is decay is how fast the light will decay
+
+const rectAreaLight = new THREE.RectAreaLight('blue', 2, 1, 1)
+scene.add(rectAreaLight)
+// 3rd and 4th params are width and height of light
+rectAreaLight.lookAt(new THREE.Vector3(0,0,0))
+
+// these are params for the spot light - aka flash light 
+const spotLight = new THREE.SpotLight('green', 0.5, 10, Math.PI * 0.1, 0.25, 1);
+spotLight.position.set(0,2,3);
+scene.add(spotLight);
+// there is on main diff between this and other lights
+// spot light has a target to point its light at
+// in order to update the target, we need to add the target to scene
+spotLight.target.position.x = -1;
+scene.add(spotLight.target);
+
+
+// additional info -> light costs performance!
+// add as few lights as possible, add efficient lights, list from efficient to not below
+// (ambient, hemisphere), (directional, point), (spotlight, rectarealight)
+
+// !!!!!!!!TOPIC BAKING!
+// use a 3D software to bake in light, downside is you can't move objects the shadow will remain
+
+
+// !!!!!!!!!TOPIC HELPERS!!!
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 0.2);
+scene.add(hemisphereLightHelper)
+
+const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
+scene.add(directionalLightHelper)
+
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
+scene.add(pointLightHelper)
+
+const spotLightHelper = new THREE.SpotLightHelper(spotLight)
+scene.add(spotLightHelper)
+window.requestAnimationFrame(()=> spotLightHelper.update()) // this is diff and needs to be done for spotLighHelper
+
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+scene.add(rectAreaLightHelper)
+
+
+/**
+ * !!!!TOPIC !!!! END LIGHTS
+ */
+
 
 /**
  * Objects
