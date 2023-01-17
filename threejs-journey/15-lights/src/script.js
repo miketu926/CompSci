@@ -54,6 +54,13 @@ scene.add(spotLight.target);
 
 
 // additional info -> light costs performance!
+// this is because light renders right before the paint render. Light renders the number of lights before the paint.
+// this is because it first captures the image from the light, and then another image at the camera position
+// during light renders, all Meshes get replaced w/ MeshDepthMaterial in order to get depth
+// light renders are store as texture shadow maps (textures of what the light can see)
+// 
+
+// THEREFORE:
 // add as few lights as possible, add efficient lights, list from efficient to not below
 // (ambient, hemisphere), (directional, point), (spotlight, rectarealight)
 
