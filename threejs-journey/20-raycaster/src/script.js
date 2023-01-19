@@ -38,6 +38,32 @@ object3.position.x = 2
 scene.add(object1, object2, object3)
 
 /**
+ * !!!!TOPIC RAYCASTER!!!!!!!!!!!
+ */
+
+
+const raycaster = new THREE.Raycaster()
+
+// const rayOrigin = new THREE.Vector3(-3, 0, 0)
+// const rayDirection = new THREE.Vector3(10, 0, 0)
+// // rays are noramlized (length of 1)
+// rayDirection.normalize(); // this reduces to length of 1 but keeps it's direction, called a unit vector
+
+// raycaster.set(rayOrigin, rayDirection) // orientate raycaster needs origin and direction b/c it is a vector
+
+// const intersect = raycaster.intersectObject(object2) // gets 1 obj
+// const objectsToTest = [object1, object2, object3]
+
+// const intersects = raycaster.intersectObjects(objectsToTest) // gets an array of objs
+// console.log(intersects.length)
+
+// note, a raycaster can hit 1 obj more than once (for ex a donut)
+
+// test rays on each frame on animated objs (this can be heavy)
+
+
+
+/**
  * Sizes
  */
 const sizes = {
@@ -58,6 +84,32 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+
+// !!!! TOPIC CURSOR MOUSE EVENTS AND RAYCASTER
+
+const mouse = new THREE.Vector2() // only captures x and y on a flat screen
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX / sizes.width * 2 - 1 // we want this to be normalized from -1 to 1
+    mouse.y = - (e.clientY / sizes.height) * 2 + 1  // we need to invert to have neg at the bottom
+})
+
+
+// we want to fire on the frame rate!!! for performance purposes
+
+
+
+// !!!!TOPIC MOUSE MOUSEENTER AND MOUSELEAVE USING A WITNESS VARIABLE
+
+let currentIntersect = null; // witness
+window.addEventListener('click', () => {
+    if (currentIntersect) {
+        // action when clicking on a sphere!!
+        console.log('clicked on a sphere')
+        console.log('==> obj being clicked', currentIntersect.object)
+    }
 })
 
 /**
@@ -90,6 +142,73 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
+    // animate objects // inside is frequency or speed, outside is amp. GET AMPED OUTSIDE!!!
+    object1.position.y = Math.sin(elapsedTime)
+    object2.position.y = Math.sin(elapsedTime * 3) * 2
+    object3.position.y = Math.sin(elapsedTime * 0.8) * 2
+
+
+
+    // // !!!! TOPIC RAYCASTER W/ UPDATES
+    
+    // const rayOrigin = new THREE.Vector3(-3, 0, 0)
+    // const rayDirection = new THREE.Vector3(10, 0, 0)
+    // // rays are noramlized (length of 1)
+    // rayDirection.normalize(); // this reduces to length of 1 but keeps it's direction, called a unit vector
+
+    // raycaster.set(rayOrigin, rayDirection) // orientate raycaster needs origin and direction b/c it is a vector
+
+    // const intersect = raycaster.intersectObject(object2) // gets 1 obj
+    const objectsToTest = [object1, object2, object3]
+
+    const intersects = raycaster.intersectObjects(objectsToTest) // gets an array of objs
+    // console.log(intersects.length)
+
+    // // we have to push a red color on every draw
+    // // and then only when it touches it changes color to blue
+    // // this should be very manuel
+    
+    // objectsToTest.forEach(obj=> {
+    //     obj.material.color.set('red')
+    // })
+    
+    // intersects.forEach(intersection => {
+    //     intersection.object.material.color = new THREE.Color('blue')
+    // })
+    
+    // // !!!! TOPIC RAYCASTER W/ UPDATES
+
+
+    // !!!!TOPIC RAYCASTER USING MOUSE (CONT. from mouse settings)
+    // coordinate of mouse and origin of the ray (in this case from the camera)
+    raycaster.setFromCamera(mouse, camera)
+    
+    objectsToTest.forEach(obj=> {
+        obj.material.color.set('red')
+    })
+    
+    intersects.forEach(intersection => {
+        intersection.object.material.color = new THREE.Color('blue')
+    })
+
+    if (intersects.length) { // something in hover
+        if (!currentIntersect) { // this is a MOUSEENTER event
+            // action
+        }
+        currentIntersect = intersects[0]
+    } else { // something not hover
+        if (currentIntersect) { // this is a MOUSELEAVE event
+            // action
+        }
+        currentIntersect = null
+    }
+
+
+    
+    // !!!!TOPIC RAYCASTER USING MOUSE (CONT. from mouse settings)
+
+
+    
     // Update controls
     controls.update()
 
