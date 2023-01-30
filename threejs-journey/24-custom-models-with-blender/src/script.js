@@ -4,6 +4,15 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import * as dat from 'lil-gui'
 
+
+/**
+ * !!!!! TOPIC!!!!! BLENDER 3D DESIGN
+ * shortcuts: https://docs.google.com/document/d/1wZzJrEgNye2ZQqwe8oBh54AXwF5cYIe56EGFe2bb0QU/edit?usp=sharing
+ * SHORTS ARE DESIGNATED WITHIN AREAS WITHIN BLENDER
+ */
+
+
+
 /**
  * Base
  */
@@ -29,8 +38,7 @@ let mixer = null
 
 gltfLoader.load(
     '/models/hamburger.glb',
-    (gltf) =>
-    {
+    (gltf) => {
         scene.add(gltf.scene)
     }
 )
@@ -75,8 +83,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -120,14 +127,12 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock()
 let previousTime = 0
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
 
-    if(mixer)
-    {
+    if (mixer) {
         mixer.update(deltaTime)
     }
 
