@@ -71,6 +71,118 @@ const material = new THREE.MeshStandardMaterial( {
     normalMap: normalTexture
 })
 
+
+// TOPIC!!! shadow ( after cont. fix shadows using MeshDepthMaterial custom hook)
+
+const depthMaterial = new THREE.MeshDepthMaterial({
+    depthPacking: THREE.RGBADepthPacking,
+})
+
+const customUniforms = {
+    uTime: { value: 0 },
+}
+
+// !!!! TOPIC!! HOOK INTO MATERIAL and modify the material 
+// exercise is to rotate the still head.
+// always replace in order of the original code includes
+
+material.onBeforeCompile = (shader) => {
+    // called before the material gets loaded
+    // access all of the settings of a material aka uniforms, shaders etc
+    console.log(shader); 
+    shader.uniforms.uTime = customUniforms.uTime; // add our own uniform var
+    
+    // replace code in vertex shader and write our own
+    // will need a outside fn to help w/ the head rotation animation
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <common>',
+        `
+            #include <common>
+
+            uniform float uTime;
+
+            mat2 get2dRotateMatrix(float _angle) {
+                return mat2(cos(_angle), -sin(_angle), sin(_angle), cos(_angle));
+            }
+            
+        `
+    )
+
+    // (cont fix for "core shadow" update)
+    // this goes between common and begin_vertex because that's the order of the original
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <beginnormal_vertex>',
+        `
+            #include <beginnormal_vertex>
+            float angle = (position.y + uTime) * 0.9;
+            // we can now use get2RotateMatrix b/c we replaced a common fn!
+
+            mat2 rotateMatrix = get2dRotateMatrix(angle);
+
+            // now we replace biginnormal var
+            objectNormal.xz = rotateMatrix * objectNormal.xz;
+
+        `
+    )
+    
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <begin_vertex>',
+        `
+            #include <begin_vertex>
+
+            // float angle = (position.y + uTime) * 0.9; // we need to comment out this line
+            // now that we redefined in the fix for core shadow
+            // we can now use get2RotateMatrix b/c we replaced a common fn!
+
+            // mat2 rotateMatrix = get2dRotateMatrix(angle); // also this too due to redefinition
+
+            transformed.xz = rotateMatrix * transformed.xz;
+        `
+    )
+
+
+    
+}
+
+// !!!!! TOPIC!!! We created depthMaterial so that we can update it in
+// the loaded glb and point it to mesh.customDepthMaterial and modify it in shader
+// MeshDepthMaterial is what is used to bake in shadows. We now need to animate its "drop shadows"
+// another problem will exist after this is the "core shadows" will not be the same as "drop shadows"
+// core shadows are on the model and (cont to part 2)
+
+depthMaterial.onBeforeCompile = (shader) => {
+    console.log(shader);
+
+    shader.uniforms.uTime = customUniforms.uTime; // add uTime var again to be used
+    // this is to now animate the "drop shadow" since we animated it to the model
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <common>',
+        `
+            #include <common>
+
+            uniform float uTime;
+
+            mat2 get2dRotateMatrix(float _angle) {
+                return mat2(cos(_angle), -sin(_angle), sin(_angle), cos(_angle));
+            }
+            
+        `
+    )
+
+    shader.vertexShader = shader.vertexShader.replace(
+        '#include <begin_vertex>',
+        `
+            #include <begin_vertex>
+
+            float angle = (position.y + uTime) * 0.9;
+            mat2 rotateMatrix = get2dRotateMatrix(angle);
+
+            transformed.xz = rotateMatrix * transformed.xz;
+        `
+    )
+    
+}
+
 /**
  * Models
  */
@@ -82,12 +194,30 @@ gltfLoader.load(
         const mesh = gltf.scene.children[0]
         mesh.rotation.y = Math.PI * 0.5
         mesh.material = material
+        
+        // update the material (for shadows)
+        mesh.customDepthMaterial = depthMaterial;
+
         scene.add(mesh)
 
         // Update materials
         updateAllMaterials()
     }
 )
+
+// !!! TOPIC!! fix shadows after the animation (cont) 
+
+const plane = new THREE.Mesh(
+    new THREE.PlaneBufferGeometry(15, 15, 15),
+    new THREE.MeshStandardMaterial()
+)
+
+plane.rotation.y = Math.PI;
+plane.position.y = - 5;
+plane.position.z = 5;
+scene.add(plane)
+
+
 
 /**
  * Lights
@@ -159,6 +289,9 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    // !!! cont TOPIC!!! uTime value that we scoped out
+    customUniforms.uTime.value = elapsedTime;
 
     // Update controls
     controls.update()
