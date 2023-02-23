@@ -1,12 +1,36 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { gsap } from 'gsap';
 
 /**
  * Loaders
  */
-const gltfLoader = new GLTFLoader()
-const cubeTextureLoader = new THREE.CubeTextureLoader()
+
+const loadingBarElement = document.querySelector('.loading-bar');
+
+const loadingManager = new THREE.LoadingManager(
+    // loaded
+    () => {
+        gsap.delayedCall(0.5, () => { // this is the delay of the transform 0.5s in css
+            gsap.to(overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0 })
+            loadingBarElement.style.transformOrigin = 'top right';
+            loadingBarElement.style.transform = "";
+        })
+    },
+    // progress
+    (itemUrl, itemsLoaded, itemsTotal) => {
+        console.log(itemUrl, itemsLoaded, itemsTotal)
+        const progress = itemsLoaded / itemsTotal;
+        console.log(progress);
+
+        loadingBarElement.style.transform = `scaleX(${progress})`;
+    },
+    // error
+    () => {}
+)
+const gltfLoader = new GLTFLoader(loadingManager)
+const cubeTextureLoader = new THREE.CubeTextureLoader(loadingManager)
 
 /**
  * Base
@@ -19,6 +43,41 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+
+
+/// !!!! TOPIC ADD IN AN "OVERLAY" aka Plane in front of the camera! So it disappears when the scene is done loading
+
+const overlayGeometry = new THREE.PlaneBufferGeometry(2,2,1,1); // to fill up the screen, put 2,2 because clip space it goes from -1 to 1
+const overlayMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+        uColor: { value: 'red' },
+        uAlpha: { value: 1 } // this drops to 0 slowly when things are done loading
+    },
+    transparent: true,
+    vertexShader: `
+        void main() {
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            // remove modelViewMatrix for a plane in front of the camera
+
+            gl_Position = vec4(position, 1.0);
+        }
+    `,
+    fragmentShader: `
+        uniform float uAlpha;
+        void main() {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, uAlpha);
+        }
+    `,
+    
+})
+const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
+
+
+
+scene.add(overlay);
+
+
+
 
 /**
  * Update all materials
