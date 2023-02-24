@@ -6,6 +6,7 @@ import { gsap } from 'gsap'
 /**
  * Loaders
  */
+let sceneReady = false;
 const loadingBarElement = document.querySelector('.loading-bar')
 const loadingManager = new THREE.LoadingManager(
     // Loaded
@@ -21,7 +22,9 @@ const loadingManager = new THREE.LoadingManager(
             loadingBarElement.classList.add('ended')
             loadingBarElement.style.transform = ''
         }, 500)
+        gsap.delayedCall(3, ()=>{sceneReady = true})
     },
+
 
     // Progress
     (itemUrl, itemsLoaded, itemsTotal) =>
@@ -127,6 +130,25 @@ gltfLoader.load(
     }
 )
 
+
+// !!!!!!! TOPIC!!! POINTS OF INTEREST !!!!!!
+const raycaster = new THREE.Raycaster();
+const points = [
+    {
+        position: new THREE.Vector3(1.55, 0.3, -0.6),
+        element: document.querySelector('.point-0')
+    },
+    {
+        position: new THREE.Vector3(0.5, 0.8, -1.6),
+        element: document.querySelector('.point-1')
+    },
+    {
+        position: new THREE.Vector3(1.6, -1.3, -0.7),
+        element: document.querySelector('.point-2')
+    },
+]
+
+
 /**
  * Lights
  */
@@ -197,6 +219,41 @@ const tick = () =>
     // Update controls
     controls.update()
 
+
+
+    // !!!! TOPIC!!! go through each point 
+
+    // visible or not visible? check raycaster length of the point of interest and the obj. If point of interest < obj, then we show
+    // otherwise point > obj then we don't show
+    if (sceneReady) {
+        for (const point of points) {
+            // need to get 2D point space of the monitor to map over to 3D space
+            const screenPosition = point.position.clone();
+            screenPosition.project(camera) // this is a NDC (normalized device coords), perfect for raycaster.setFromCamera
+    
+            const intersects = raycaster.intersectObjects(scene.children, true) // recursive children set to true
+            if (intersects.length === 0) {
+                point.element.classList.add('visible')
+            } else {
+                const intersectionDistance = intersects[0].distance; // distance from camera to obj
+                const pointDistance = point.position.distanceTo(camera.position) // 
+                if (intersectionDistance < pointDistance) {
+                    point.element.classList.remove('visible')
+                } else {
+                    point.element.classList.add('visible')
+                }
+            }
+    
+            raycaster.setFromCamera(screenPosition, camera);
+    
+            const translateX = screenPosition.x * sizes.width * 0.5;
+            const translateY = - screenPosition.y * sizes.height * 0.5;
+            // point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`
+            point.element.style.transform = `translate(${translateX}px, ${translateY}px)` // shortform of translate
+        }
+    }
+    
+    
     // Render
     renderer.render(scene, camera)
 
