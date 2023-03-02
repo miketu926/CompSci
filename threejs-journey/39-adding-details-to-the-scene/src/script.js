@@ -3,11 +3,16 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import firefliesVertexShader from './shaders/fireflies/vertex.glsl';
+import firefliesFragmentShader from './shaders/fireflies/fragment.glsl';
+import portalVertexShader from './shaders/portal/vertex.glsl';
+import portalFragmentShader from './shaders/portal/fragment.glsl';
 
 /**
  * Base
  */
 // Debug
+const debugObject = {};
 const gui = new dat.GUI({
     width: 400
 })
@@ -49,7 +54,13 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture })
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
 
 // Portal light material
-const portalLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff })
+const portalLightMaterial = new THREE.ShaderMaterial({
+    vertexShader: portalVertexShader,
+    fragmentShader: portalFragmentShader,
+    uniforms: {
+        uTime: { value: 0 },
+    },
+})
 
 /**
  * Model
@@ -74,6 +85,47 @@ gltfLoader.load(
     }
 )
 
+
+///// !!!! TOPIC create fireflies! with particles
+
+const firefliesGeometry = new THREE.BufferGeometry()
+const firefliesCount = 30;
+const positionArray = new Float32Array(firefliesCount * 3); // xyz
+const scaleArray = new Float32Array(firefliesCount); // 1 value
+
+for (let i = 0; i < firefliesCount; i++) {
+    positionArray[i * 3 + 0] = (Math.random() - 0.5) * 4;
+    positionArray[i * 3 + 1] = Math.random() * 1.5;
+    positionArray[i * 3 + 2] = (Math.random() - 0.5) * 4;
+
+    scaleArray[i] = Math.random();
+}
+
+firefliesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
+firefliesGeometry.setAttribute('aScale', new THREE.BufferAttribute(scaleArray, 1));
+
+const firefliesMaterial = new THREE.ShaderMaterial({
+    vertexShader: firefliesVertexShader,
+    fragmentShader: firefliesFragmentShader,
+    transparent: true,
+    uniforms: {
+        uTime: { value: 0 },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uSize: { value: 100 },
+    },
+    blending: THREE.AdditiveBlending,
+    depthWrite: false, // this tells the GPU to not track which particles get drawn first so they will all show on top of each other, not over each other
+
+})
+
+
+gui.add(firefliesMaterial.uniforms.uSize, 'value').min(0).max(500).step(1).name('firefliesSize')
+
+// points
+const fireflies = new THREE.Points(firefliesGeometry, firefliesMaterial);
+scene.add(fireflies);
+
+
 /**
  * Sizes
  */
@@ -95,6 +147,10 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    /// !!!! TOPIC!! make sure to update the pixel ratio for people who are switching monitors while
+    // using PointSize in shaders
+    firefliesMaterial.uniforms.uPixelRatio.value =  Math.min(window.devicePixelRatio, 2);
 })
 
 /**
@@ -122,6 +178,11 @@ renderer.outputEncoding = THREE.sRGBEncoding
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+
+debugObject.clearColor = '#ff0000';
+renderer.setClearColor(debugObject.clearColor);
+gui.addColor(debugObject, 'clearColor').onChange(() => renderer.setClearColor(debugObject.clearColor))
+
 /**
  * Animate
  */
@@ -130,6 +191,9 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    fireflies.material.uniforms.uTime.value = elapsedTime;
+    portalLightMaterial.uniforms.uTime.value = elapsedTime;
 
     // Update controls
     controls.update()
