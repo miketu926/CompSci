@@ -1,0 +1,11 @@
+.vue-tooltip {
+  background-color: var(--dark-primary-color) !important;
+  color: var(--light-text-primary-color);
+  z-index: $z_index-tooltip + 10000 !important;
+  font-size: 12px !important;
+  border: 1px solid var(--dark-border-primary-color);
+  box-shadow: var(--box-shadow-dropdown);
+  .tooltip-arrow {
+    border-color: var(--dark-border-primary-color) !important;
+  }
+}

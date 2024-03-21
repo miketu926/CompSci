@@ -1,0 +1,16 @@
+title: Portfolio
+description: My portfolio
+screenshot: portfolio
+repo: https://github.com/ndragun92/portfolio
+link: https://ndragun92.github.io/portfolio/
+tech:
+  - name: Nuxt.js
+    image: nuxt
+  - name: Html
+    image: html
+  - name: Javascript
+    image: js
+  - name: Sass
+    image: sass
+  - name: Css
+    image: css

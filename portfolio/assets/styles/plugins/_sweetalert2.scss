@@ -1,0 +1,55 @@
+$cancel_button_color: #aaaaaa;
+$confirm_button_color: #007cba;
+$text_button_color: #ffffff;
+
+.swal2 {
+  &-container {
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+  &-popup, &-toast {
+    background: var(--dark-primary-color) !important;
+    border: 1px solid var(--dark-border-primary-color) !important;
+    color: var(--light-text-primary-color) !important;
+    box-shadow: var(--box-shadow-box) !important;
+  }
+  &-title {
+    color: var(--light-text-primary-color) !important;
+  }
+  &-timer-progress-bar {
+    background: var(--active-color-primary) !important;
+  }
+  &-actions {
+    button {
+      margin: .3125em !important;
+      padding: .625em 2em !important;
+      box-shadow: none !important;
+      font-weight: 500 !important;
+      cursor: pointer !important;
+      transition: 0.2s linear !important;
+    }
+    .swal2-cancel {
+      border: 0 !important;
+      border-radius: 0.25em !important;
+      background-color: $cancel_button_color !important;
+      color: $text_button_color !important;
+      font-size: 13px !important;
+      &:hover {
+        background-color: darken($cancel_button_color, 10%) !important;
+      }
+    }
+    .swal2-confirm {
+      border: 0 !important;
+      border-radius: 3px !important;
+      background-color: $confirm_button_color !important;
+      color: $text_button_color !important;
+      font-size: 13px !important;
+      &:hover {
+        background-color: darken($confirm_button_color, 10%) !important;
+      }
+    }
+  }
+}
+
+.swal2-success-circular-line-right, .swal2-success-fix {
+  background-color: var(--dark-primary-color) !important;
+}

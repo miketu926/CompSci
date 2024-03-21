@@ -1,0 +1,28 @@
+.g-link {
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--active-color-primary);
+  transition: var(--transition);
+  text-decoration: none;
+  &:hover {
+   color: rgba(var(--active-color-primary-rgb), 0.8);
+  }
+  &--edit {
+    color: var(--info-color);
+    &:hover {
+      color: rgba(var(--info-color-rgb), 0.8);
+    }
+  }
+  &--delete {
+    color: var(--error-color);
+    &:hover {
+      color: rgba(var(--error-color-rgb), 0.8);
+    }
+  }
+  &--image {
+    cursor: zoom-in;
+    &-placeholder {
+      cursor: initial;
+    }
+  }
+}

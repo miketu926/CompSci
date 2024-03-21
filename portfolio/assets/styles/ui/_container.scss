@@ -1,0 +1,23 @@
+.g-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 40px;
+  &--fluid {
+    max-width: 100%;
+  }
+  &:not(.g-container--fluid) {
+    @include mediumDesktop {
+      max-width: 1000px;
+    }
+    @include largeDesktop {
+      max-width: 1100px;
+    }
+  }
+  @include tablet {
+    padding: 0 20px;
+  }
+  @include upToMobile {
+    padding: 0 10px;
+  }
+}

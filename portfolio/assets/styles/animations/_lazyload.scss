@@ -1,0 +1,18 @@
+img[lazy=loaded] {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+}
+img[lazy=loading] {
+  object-fit: none !important;
+}
+img[lazy-progressive=true] {
+  object-fit: none !important;
+}
+img[lazy=error] {
+  object-fit: none !important;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: fadeIn;
+  background-color: var(--dark-secondary-color);
+}

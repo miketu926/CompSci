@@ -1,0 +1,16 @@
+title: Todo list
+description: Todo list - made with Nuxt.js and Bootstrap
+screenshot: todo-nuxt
+repo: https://github.com/ndragun92/todo-nuxt
+link: https://ndragun92.github.io/todo-nuxt/
+tech:
+  - name: Nuxt.js
+    image: nuxt
+  - name: Html
+    image: html
+  - name: Javascript
+    image: js
+  - name: Bootstrap
+    image: bootstrap
+  - name: Css
+    image: css
